@@ -1,7 +1,9 @@
 package com.example.BookMart.Controller;
 
 import com.example.BookMart.Dtos.UserDTO;
+import com.example.BookMart.Service.UserService;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -10,25 +12,32 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private List<UserDTO> listOfUser = new ArrayList<UserDTO>();
+    @Autowired
+    UserService userService;
 
     @PostMapping("/create")
-    void createUser(@RequestBody UserDTO user) {
-        listOfUser.add(user);
+    String createUser(@RequestBody UserDTO user) {
+        userService.createUser(user);
+        return "User created Successfully";
 
     }
 
-    @GetMapping("/getId")
-    UserDTO getUser() {
-        return new UserDTO();
+    @GetMapping("/getAll")
+    List<UserDTO> getAll() {
+        return userService.getAllUser();
     }
 
-    @PutMapping("/updateUser")
-    void updateUser() {
-    }
+//    @GetMapping("/getId")
+//    UserDTO getUser() {
+//        return new UserDTO();
+//    }
 
-    @DeleteMapping("/deleteUser")
-    boolean deleteuser() {
-        return false;
-    }
+//    @PutMapping("/updateUser")
+//    void updateUser() {
+//    }
+
+//    @DeleteMapping("/deleteUser")
+//    boolean deleteuser() {
+//        return false;
+//    }
 }
